@@ -17,7 +17,10 @@ function createCartModel(config) {
     		total = total + this.items[idx].price;
     	}
     	return total.toFixed(2);
+
 	}; //getTotalPrice()
-	JSON.stringify(this.items);
+	model.toJSON = function() {
+		JSON.stringify(this.items)
+	}
 	return model;
 } //createCartModel()

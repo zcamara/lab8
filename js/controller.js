@@ -29,7 +29,7 @@ $(function(){
 	});
 
 	//refresh to get movies from server
-	moviesModel.refresh();
+	moviesModel.refresh();          
 
 	//when the movies view triggers 'addToCart'
 	//add a new item to the cart, using the supplied
@@ -49,8 +49,22 @@ $(function(){
 	}); //addToCart event
 
 	$('.place-order').click(function(){
-		console.log(cartModel.toJSON());
+		$.ajax({
+		    url: 'https://courses.washington.edu/info343/ajax/movies/orders/',
+		    type: 'POST',
+		    data: cartModel.toJSON(),
+		    contentType: 'application/json',
+		    success: function(responseData) {
+		        //code to run after successful post
+		        alert(responseData.message);
+		        cartModel.setItems([]);
+		    },
+		    error: function(jqXHR, status, errorThrown) {
+		        //error with post--alert user
+		        alert(errorThrown || status);
+		    }
+		}); //ajax()
 	});
-
+	
 }); //doc ready()
 
